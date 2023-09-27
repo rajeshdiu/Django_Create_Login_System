@@ -31,10 +31,12 @@ def signup(request):
         email=request.POST.get("email")
         pass1=request.POST.get("password1")
         pass2=request.POST.get("password2")
-        myuser=User.objects.create_user(uname,email,pass1)
-        myuser.save()
-        
-        return HttpResponse("user Create successfully")
+        if pass1!=pass2:
+            return HttpResponse("Not Match")
+        else:
+            myuser=User.objects.create_user(uname,email,pass1)
+            myuser.save()
+            return redirect("login")
     
     return render(request,"signup.html")
 
